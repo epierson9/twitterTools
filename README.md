@@ -9,14 +9,17 @@ Usage:
 
 1. Figure out what sets of hashtags or words you’re interested in. 
 2. Create a folder in your base directory for each set of hashtags/words you want to monitor. Set the base directory argument in the program using the “BASE_DIR” argument (line 14). 
-3. Get a Twitter API key here and enter the appropriate information in lines 10 - 13. The consumer keys can be found on your application's details page located at https://dev.twitter.com/apps (under "OAuth settings"). The access tokens can be found at https://dev.twitter.com/apps under “Your access token”. 
-4. Install tweepy. 
+3. Get a Twitter API key at https://apps.twitter.com/app/new and enter the appropriate information in lines 10 - 13. The consumer keys can be found on your application's details page located at https://dev.twitter.com/apps (under "OAuth settings"). The access tokens can be found at https://dev.twitter.com/apps under “Your access token”. 
+4. Install tweepy (http://www.tweepy.org/). 
 5. Run “python mineTweets.py folder_names use_hashtags use_non_hashtags hashtag_sets”
-where you replace the italicized variables as follows: 
+where you replace the underscored variables as follows: 
 
 folder_names: The names of the folders for each dataset, separated by commas (no spaces). 
+
 use_hashtags: True for each dataset if you want to search for hashtags, False if you just want to search for words. (Ie, if I want “#lol”, I put “True”; if I just want “lol”, I put “False”). Put commas between each True and False. 
+
 use_non_hashtags: True for each dataset if you want to search for words, False if you just want to search for hashtags.  (Ie, if I want “lol”, I put “True”; if I just want “#lol”, I put “False”). 
+
 hashtag_sets: a list of comma separated words to search for (no spaces; if there are spaces in what you want to search for, replace them with underscores. Ie, if I want to search for “robin williams”, I would put “robin_williams”). Capitalization does not matter. If you have multiple sets you’re interested in, put a space between each set. 
 
 Examples: 
