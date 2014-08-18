@@ -1,9 +1,7 @@
 twitterTools
 ============
 
-Tools for analyzing Twitter. 
-
-This program allows you to monitor Twitter for multiple sets of words or hashtags, collecting all data for live-streaming Tweets. So, for example, if I want to collect all Tweets containing “woody allen” and simultaneously and separately collect all tweets containing “#icebucketchallenge”, this program will allow me to do that. 
+Tools for studying Twitter. At present this contains only mineTweets.py, which allows you to monitor Twitter for multiple sets of words or hashtags, collecting all data for live-streaming Tweets. So, for example, if I want to collect all Tweets containing “woody allen” and simultaneously and separately collect all tweets containing “#icebucketchallenge”, this program will allow me to do that. 
 
 Usage: 
 
