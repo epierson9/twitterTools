@@ -3,10 +3,10 @@ from tweepy.streaming import StreamListener
 import sys, json, os, string, random
 from traceback import print_exc
 
-atoken = None #your access token
+atoken =  None #your access token
 asecret = None #your access secret
-ckey = None #your consumer key
-csecret = None #your consumer secret
+ckey =  None #your consumer key
+csecret =  None #your consumer secret. 
 BASE_DIR = None #your base directory. 
 
 bad_set = ''.join([a for a in string.punctuation if a!='#'])
@@ -112,7 +112,7 @@ class listener(StreamListener):
     def __init__(self):
         self.n_streams = len(outfileDirs)
         self.n = [0 for i in range(self.n_streams)]
-        self.outfile_number = [getMaxOutfileNumber(os.path.join(BASE_DIR, outfileName, outfileName) for outfileName in outfileDirs]
+        self.outfile_number = [getMaxOutfileNumber(os.path.join(BASE_DIR, outfileName), outfileName) for outfileName in outfileDirs]
         print 'Max outfile numbers are', self.outfile_number, 'for', outfileDirs
         self.n_geolocated = [0 for i in range(self.n_streams)]
         self.outfile = [None for i in range(self.n_streams)]
