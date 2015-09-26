@@ -58,6 +58,7 @@ def getWhichGroupTweetBelongsTo(processed_string):
         if in_group:
             idxs.append(idx)
     return idxs
+
 class listener(StreamListener):
     """main class for getting and processing Twitter data"""
     def on_data(self, data):
@@ -71,9 +72,15 @@ class listener(StreamListener):
                 
             hashtags = [a['text'] for a in d['entities']['hashtags']]
             tokenized_tweet = removePuncExceptHashtag(tweet_text)
-            groups = getWhichGroupTweetBelongsTo(tokenized_tweet)
+            
+            if len(tweetGroups) > 1:#if we have more than one group, try to assign tweet to a group. 
+                groups = getWhichGroupTweetBelongsTo(tokenized_tweet)
+            else:
+                groups = [0]
+
             if len(groups) == 0:
                 print 'Unable to assign tweet to a group; hashtags were', hashtags, 'groups were', groups, 'tweet text', tweet_text
+            
             for idx in groups:
                 group = outfileDirs[idx]
                 if group in downsample_fracs and random.random() > downsample_fracs[group]:#if we are down-sampling, only take some tweets. 
@@ -82,10 +89,11 @@ class listener(StreamListener):
                 if (self.n[idx])%1000 == 0:#if we have dumped a thousand tweets, dump to a new outfile. 
                     self.outfile_number[idx] += 1
                     print 'Writing to outfile', self.outfile_number[idx]
-                    self.outfile[idx] = open('%s/%s%i' % (outfileDirs[idx], outfileDirs[idx], self.outfile_number[idx]), 'wb')
+                    self.outfile[idx] = open('%s' % os.path.join(BASE_DIR, outfileDirs[idx], outfileDirs[idx] + str(self.outfile_number[idx])), 'wb')
                 
                 if str(d['user']['geo_enabled']) != 'False':
                     self.n_geolocated[idx] += 1
+
                 print 'For group', idx + 1, 'tweet', self.n[idx], 'geolocated', self.n_geolocated[idx], d['text'].encode('utf-8'), d['created_at']
                 self.outfile[idx].write(json.dumps(d)+'\n')
                 self.n[idx]+=1
@@ -104,7 +112,7 @@ class listener(StreamListener):
     def __init__(self):
         self.n_streams = len(outfileDirs)
         self.n = [0 for i in range(self.n_streams)]
-        self.outfile_number = [getMaxOutfileNumber(BASE_DIR + outfileName + '/', outfileName) for outfileName in outfileDirs]
+        self.outfile_number = [getMaxOutfileNumber(os.path.join(BASE_DIR, outfileName, outfileName) for outfileName in outfileDirs]
         print 'Max outfile numbers are', self.outfile_number, 'for', outfileDirs
         self.n_geolocated = [0 for i in range(self.n_streams)]
         self.outfile = [None for i in range(self.n_streams)]
